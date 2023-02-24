@@ -27,7 +27,8 @@ function checkLength(string, maxLength) {
 имяФункции('ДовОд'); // true
 - Это не палиндром
 имяФункции('Кекс');  // false
-Если хотите усложнить задание, предусмотрите случай, когда в строке встречаются пробелы. Они не должны учитываться при проверке!
+Если хотите усложнить задание, предусмотрите случай, когда в строке встречаются пробелы.
+Они не должны учитываться при проверке!
 
 Это палиндром
 имяФункции('Лёша на полке клопа нашёл '); // true*/
@@ -57,7 +58,37 @@ function checkPalindrome (string) {
 имяФункции(-1);   // 1
 имяФункции(1.5);  // 15*/
 /*
-function getNumbers () {}
+function getStringToNumber (string) {
+  let stringNumber = '';
+  for (let i = 0; i <= string.length; i++) {
+    if (Number(string.at(i)) === Number(string.at(i))) {
+      stringNumber += string.at(i);
+    }
+  }
+  stringNumber = stringNumber.replaceAll(' ', '');
+  if (stringNumber === '') {
+    return NaN;
+  }
+  return Number(stringNumber);
+}
+
+console.log(getStringToNumber('1 кефир, 0.5 батона'));
+*/
+
+function getStringToNumber (string) {
+  let stringNumber = '';
+  string = String(string);
+  for (let i = 0; i <= string.length; i++) {
+    if (Number(string.at(i)) === Number(string.at(i))) {
+      stringNumber += string.at(i);
+    }
+  }
+  stringNumber = stringNumber.replaceAll(' ', '');
+  if (stringNumber === '') {
+    return NaN;
+  }
+  return Number(stringNumber);
+}
 
 /*Функция, которая принимает три параметра: исходную строку, минимальную длину и строку
  с добавочными символами — и возвращает исходную строку, дополненную указанными символами
