@@ -12,7 +12,7 @@
 имяФункции('проверяемая строка', 10); // false*/
 
 function checkLength(string, maxLength) {
-  if(string.length <= maxLength) {
+  if (string.length <= maxLength) {
     return true;
   }
   return false;
@@ -33,10 +33,10 @@ function checkLength(string, maxLength) {
 Это палиндром
 имяФункции('Лёша на полке клопа нашёл '); // true*/
 
-function checkPalindrome (string) {
+function checkPalindrome(string) {
   string = string.replaceAll(' ', '');
   string = string.toLowerCase();
-  for(let i = 0; i <= string.length / 2; i++) {
+  for (let i = 0; i <= string.length / 2; i++) {
     if (string.at(i) === string.at(string.length - (i + 1))) {
       return true;
     } return false;
@@ -75,7 +75,7 @@ function getStringToNumber (string) {
 console.log(getStringToNumber('1 кефир, 0.5 батона'));
 */
 
-function getStringToNumber (string) {
+function getStringToNumber(string) {
   let stringNumber = '';
   string = String(string);
   for (let i = 0; i <= string.length; i++) {
@@ -113,5 +113,20 @@ function getStringToNumber (string) {
 // Добавочные символы не использованы, исходная строка не изменена
 имяФункции('qwerty', 4, '0'); // 'qwerty'
 Попробуйте не использовать при этом функцию padStart() =)*/
-/*
-function getNewString () {}*/
+
+function getNewString(string, minLength, additionalSymbols) {
+  let addSymbolString = '';
+  if (string.length <= minLength) {
+    for (let i = minLength - string.length; i > 0; i = i - additionalSymbols.length) {
+      if (additionalSymbols.length <= i) {
+        addSymbolString += additionalSymbols.slice();
+      } else {
+        addSymbolString = additionalSymbols.slice(0, i) + addSymbolString;
+      }
+    }
+    addSymbolString += string;
+    return addSymbolString;
+  }
+  return string;
+}
+
