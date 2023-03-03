@@ -11,12 +11,8 @@
 - Строка длиннее 10 символов
 имяФункции('проверяемая строка', 10); // false*/
 
-function checkLength(string, maxLength) {
-  if (string.length <= maxLength) {
-    return true;
-  }
-  return false;
-}
+const checkLength = (string, maxLength) => string.length <= maxLength;
+
 
 /*Функция для проверки, является ли строка палиндромом.
 Палиндром — это слово или фраза, которые одинаково читаются и слева направо и справа налево.
@@ -33,14 +29,10 @@ function checkLength(string, maxLength) {
 Это палиндром
 имяФункции('Лёша на полке клопа нашёл '); // true*/
 
-function checkPalindrome(string) {
-  string = string.replaceAll(' ', '');
-  string = string.toLowerCase();
-  for (let i = 0; i <= string.length / 2; i++) {
-    if (string.at(i) === string.at(string.length - (i + 1))) {
-      return true;
-    } return false;
-  }
+function isPalindrome(string) {
+  const tempString = string.toLowerCase().replaceAll(' ', '');
+  const reversedString = tempString.split('').reverse().join('');
+  return tempString === reversedString;
 }
 
 /*Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9
@@ -57,38 +49,11 @@ function checkPalindrome(string) {
 имяФункции(2023); // 2023
 имяФункции(-1);   // 1
 имяФункции(1.5);  // 15*/
-/*
-function getStringToNumber (string) {
-  let stringNumber = '';
-  for (let i = 0; i <= string.length; i++) {
-    if (Number(string.at(i)) === Number(string.at(i))) {
-      stringNumber += string.at(i);
-    }
-  }
-  stringNumber = stringNumber.replaceAll(' ', '');
-  if (stringNumber === '') {
-    return NaN;
-  }
-  return Number(stringNumber);
-}
 
-console.log(getStringToNumber('1 кефир, 0.5 батона'));
-*/
-
-function getStringToNumber(string) {
-  let stringNumber = '';
-  string = String(string);
-  for (let i = 0; i <= string.length; i++) {
-    if (Number(string.at(i)) === Number(string.at(i))) {
-      stringNumber += string.at(i);
-    }
-  }
-  stringNumber = stringNumber.replaceAll(' ', '');
-  if (stringNumber === '') {
-    return NaN;
-  }
-  return Number(stringNumber);
-}
+const extractNumberFromString = (string) => {
+  const result = String(string).replace(/[^0-9]/g, '');
+  return parseInt(result, 10);
+};
 
 /*Функция, которая принимает три параметра: исходную строку, минимальную длину и строку
  с добавочными символами — и возвращает исходную строку, дополненную указанными символами
@@ -114,19 +79,19 @@ function getStringToNumber(string) {
 имяФункции('qwerty', 4, '0'); // 'qwerty'
 Попробуйте не использовать при этом функцию padStart() =)*/
 
-function getNewString(string, minLength, additionalSymbols) {
-  let addSymbolString = '';
-  if (string.length <= minLength) {
-    for (let i = minLength - string.length; i > 0; i = i - additionalSymbols.length) {
-      if (additionalSymbols.length <= i) {
-        addSymbolString += additionalSymbols.slice();
-      } else {
-        addSymbolString = additionalSymbols.slice(0, i) + addSymbolString;
-      }
-    }
-    addSymbolString += string;
-    return addSymbolString;
+function getStringWithAddSymbols(string, minLength, additionalSymbols) {
+  if (string.length > minLength) {
+    return string;
   }
-  return string;
-}
 
+  let addSymbolString = '';
+  for (let i = minLength - string.length; i > 0; i = i - additionalSymbols.length) {
+    if (additionalSymbols.length <= i) {
+      addSymbolString += additionalSymbols.slice();
+    } else {
+      addSymbolString = additionalSymbols.slice(0, i) + addSymbolString;
+    }
+  }
+  addSymbolString += string;
+  return addSymbolString;
+}
