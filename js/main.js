@@ -29,8 +29,7 @@
 Аватарки подготовлены в директории img. (как это влияет на код?)
 
 Для формирования текста комментария — message — вам необходимо взять одно или два случайных
-предложения (как сделать, чтобы выбиралось 1 или 2 предложения и добавлялись в массив?)
-из представленных ниже:+
+предложения из представленных ниже:+
 Всё отлично!
 В целом всё неплохо. Но не всё.
 Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.
@@ -101,24 +100,6 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-/*
-function createRandomIdFromRangeGenerator(min, max) {
-  const previousValues = [];
-
-  return function () {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      console.error('Перебраны все числа из диапазона от ' + min + ' до ' + max);
-      return 'Почему-то ноль';
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-}*/
-
 function createRandomIdFromRangeGenerator(min, max) {
   const previousValues = [];
 
@@ -153,7 +134,7 @@ const createComment = () => {
 const generateImageId = createRandomIdFromRangeGenerator(1, IMAGES_COUNT);
 const generateUrlPhotos = createRandomIdFromRangeGenerator(1, IMAGES_COUNT);
 
-const createuserImageAndDescription = () => {
+const createPhotoData = () => {
   const randomDescriptionIndex = getRandomInteger(0, DESCRIPTION.length - 1);
   const randomLikesIndex = getRandomInteger(LIKES_MIN_COUNT, LIKES_MAX_COUNT);
   const randomCommentIndex = getRandomInteger(1, MAX_COMMENT_COUNT);
@@ -164,12 +145,10 @@ const createuserImageAndDescription = () => {
     url: `photos/${generateUrlPhotos()}.jpg`,
     description: DESCRIPTION[randomDescriptionIndex],
     likes: randomLikesIndex,
-    comment: arrayMessages,
+    comments: arrayMessages,
   };
 };
 
-console.log('createuserImageAndDescription', createuserImageAndDescription());
+const photosData = Array.from({length: IMAGES_COUNT}, createPhotoData);
 
-const arrayUserImageAndDescription = Array.from({length: IMAGES_COUNT}, createuserImageAndDescription);
-
-console.log(arrayUserImageAndDescription);
+console.log(photosData);
