@@ -87,6 +87,4 @@ const createPhotoData = () => {
 
 const photosData = Array.from({length: IMAGES_COUNT}, createPhotoData);
 
-console.log(photosData);
-
 export {photosData};
