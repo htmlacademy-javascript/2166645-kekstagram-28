@@ -38,6 +38,7 @@ const DESCRIPTION = [
   'Это не она кот - это я кот',
   'Чучело-мяучело на трубе сидело...',
   'Кто первым встал, того и тапки',
+  'Жить, как говорится, хорошо! А хорошо жить - еще лучше!'
 ];
 
 const IMAGES_COUNT = 25;
@@ -86,5 +87,6 @@ const createPhotoData = () => {
 };
 
 const photosData = Array.from({length: IMAGES_COUNT}, createPhotoData);
+console.log(photosData);
 
 export {photosData};
