@@ -26,6 +26,9 @@ const fillBigPicture = (photoData) => {
 
 picturesContainer.addEventListener('click', (evt) => {
   const photoAttrId = evt.target.parentNode.dataset.thumbnailId;
+  if (!photoAttrId) {
+    return;
+  }
   const photoDataObj = photosData.find((element) => element.id === Number(photoAttrId));
 
   fillBigPicture(photoDataObj);
