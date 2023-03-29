@@ -58,7 +58,7 @@ const pristine = new Pristine(imgUploadForm, {
   //successClass: 'form__item--valid',
   errorTextParent: 'img-upload__field-wrapper',
   //errorTextTag: 'span',
-  //errorTextClass: 'form__error'
+  //errorTextClass: 'img-upload__field-wrapper__error-text'
 });
 
 //здесь добавляем все проверки правильности заполнения полей
@@ -68,9 +68,9 @@ const validateHashtag = (value) => {
   if (value === '') {
     return true;
   } else {
-    const valueArray = value.trim().split(' ');
+    const valueArray = value.split('');
 
-    valueArray.every((element) => {
+    valueArray.forEach((element) => {
       isHashtag.test(element);
     });
   }
@@ -107,13 +107,14 @@ const validateTextDescription = (value) => {
 };
 
 //1. проверить каждый элемент массива на соответствие правильности заполнения
-//2. хэш-теги разделяются пробелами - это проверку еще нужно дописать
+//2. хэш-теги разделяются пробелами
 //3. проверить, чтобы элементы в массиве не повторялись
 //4. если фокус находится в поле ввода хэш-тега,
-//нажатие на Esc не должно приводить к закрытию формы редактирования изображения.
+//нажатие на Esc не должно приводить к закрытию формы редактирования изображения. - это еще не сделала
 
 //для поля комментарии
-//1.	если фокус находится в поле ввода комментария, нажатие на Esc не должно приводить к закрытию формы редактирования изображения.
+//1.	если фокус находится в поле ввода комментария, нажатие на Esc не должно приводить к закрытию
+//формы редактирования изображения. - это еще не сделала
 
 pristine.addValidator(textHashtags, validateAmountHashtags, 'больше 5 хэштегов, уберите лишний');
 pristine.addValidator(textHashtags, validateHashtag, 'элемент не является хэштегом');
@@ -121,7 +122,16 @@ pristine.addValidator(textHashtags, validateDoubleHashtags, 'этот хэште
 pristine.addValidator(textDescription, validateTextDescription, 'комментарий должен быть не более 140 символов');
 
 //здесь надо событие на кнопку вешать или на всю форму? В демонстрации указано было на всю форму
-imgUploadForm.addEventListener('submit', (evt) => {
+/*imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
-});
+});*/
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  if (pristine.validate()) {
+    imgUploadForm.submit();
+  }
+};
+
+imgUploadForm.addEventListener('submit', onFormSubmit);
