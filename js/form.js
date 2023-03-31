@@ -11,8 +11,12 @@ const imgUploadSubmit = imgUploadForm.querySelector('.img-upload__submit');
 
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
-    closeOverlay();
-    imgUploadForm.reset();
+    if(textHashtags === document.activeElement || textDescription === document.activeElement) {
+      evt.stopPropagation();
+    } else {
+      closeOverlay();
+      imgUploadForm.reset();
+    }
   }
 };
 
