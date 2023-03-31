@@ -65,14 +65,12 @@ const pristine = new Pristine(imgUploadForm, {
 const isHashtag = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const validateHashtag = (value) => {
-  if (value === '') {
+  if (!value.length) {
     return true;
   } else {
-    const valueArray = value.split('');
+    const valueArray = value.trim().split(' ');
 
-    valueArray.forEach((element) => {
-      isHashtag.test(element);
-    });
+    return valueArray.every((element) => isHashtag.test(element));
   }
 };
 
@@ -81,8 +79,9 @@ const validateAmountHashtags = (value) => {
   return valueArray.length <= MAX_LENGTH_ARRAY_HASHTAG;
 };
 
+//доделать, чтобы выводилось сообщение об ошибке правильно
 const validateDoubleHashtags = (value) => {
-  if (value === '') {
+  if (!value.length) {
     return true;
   } else {
     const valueArray = value.trim().split(' ');
@@ -99,15 +98,14 @@ const validateDoubleHashtags = (value) => {
 };
 
 const validateTextDescription = (value) => {
-  if (value === '') {
+  if (!value.length) {
     return true;
   } else {
     return value.length <= MAX_LENGTH_DESCRIPTION;
   }
 };
 
-//1. проверить каждый элемент массива на соответствие правильности заполнения
-//2. хэш-теги разделяются пробелами
+//2. хэш-теги разделяются пробелами сделать проверку
 //3. проверить, чтобы элементы в массиве не повторялись
 //4. если фокус находится в поле ввода хэш-тега,
 //нажатие на Esc не должно приводить к закрытию формы редактирования изображения. - это еще не сделала
@@ -117,7 +115,7 @@ const validateTextDescription = (value) => {
 //формы редактирования изображения. - это еще не сделала
 
 pristine.addValidator(textHashtags, validateAmountHashtags, 'больше 5 хэштегов, уберите лишний');
-pristine.addValidator(textHashtags, validateHashtag, 'элемент не является хэштегом');
+pristine.addValidator(textHashtags, validateHashtag, 'хэштег должен начинаться со знака # и состоять из букв и цифр. Длина хэштега должа быть не более 20 символов.');
 pristine.addValidator(textHashtags, validateDoubleHashtags, 'этот хэштег уже добавлен');
 pristine.addValidator(textDescription, validateTextDescription, 'комментарий должен быть не более 140 символов');
 
