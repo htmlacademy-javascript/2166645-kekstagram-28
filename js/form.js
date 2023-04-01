@@ -11,7 +11,7 @@ const imgUploadSubmit = imgUploadForm.querySelector('.img-upload__submit');
 
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
-    if(textHashtags === document.activeElement || textDescription === document.activeElement) {
+    if (textHashtags === document.activeElement || textDescription === document.activeElement) {
       evt.stopPropagation();
     } else {
       closeOverlay();
@@ -88,17 +88,30 @@ const validateDoubleHashtags = (value) => {
   if (!value.length) {
     return true;
   } else {
-    const valueArray = value.trim().split(' ');
+    const string = value.toLowerCase();
+    const valueArray = string.trim().split(' ');
     const currentArray = [];
 
     for (let i = 0; i < valueArray.length; i++) {
       currentArray.push(valueArray[i]);
       if (currentArray.includes(valueArray[i])) {
         return false;
+      } else {
+        return true;
       }
-      return true;
     }
   }
+};
+
+
+const validateSpaces = (value) => {
+  const valueArray = value.split('');
+  for (let i = 0; i < valueArray.length; i++) {
+    if (valueArray[i] === ' ' && valueArray[i + 1] === ' ') {
+      return false;
+    }
+  }
+  return true;
 };
 
 const validateTextDescription = (value) => {
@@ -109,25 +122,13 @@ const validateTextDescription = (value) => {
   }
 };
 
-//2. хэш-теги разделяются пробелами сделать проверку
 //3. проверить, чтобы элементы в массиве не повторялись
-//4. если фокус находится в поле ввода хэш-тега,
-//нажатие на Esc не должно приводить к закрытию формы редактирования изображения. - это еще не сделала
-
-//для поля комментарии
-//1.	если фокус находится в поле ввода комментария, нажатие на Esc не должно приводить к закрытию
-//формы редактирования изображения. - это еще не сделала
 
 pristine.addValidator(textHashtags, validateAmountHashtags, 'больше 5 хэштегов, уберите лишний');
 pristine.addValidator(textHashtags, validateHashtag, 'хэштег должен начинаться со знака # и состоять из букв и цифр. Длина хэштега должа быть не более 20 символов.');
 pristine.addValidator(textHashtags, validateDoubleHashtags, 'этот хэштег уже добавлен');
+pristine.addValidator(textHashtags, validateSpaces, 'уберите лишний пробел');
 pristine.addValidator(textDescription, validateTextDescription, 'комментарий должен быть не более 140 символов');
-
-//здесь надо событие на кнопку вешать или на всю форму? В демонстрации указано было на всю форму
-/*imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});*/
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
