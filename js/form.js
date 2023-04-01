@@ -7,7 +7,6 @@ const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
 const closeOverlayBtn = imgUploadForm.querySelector('#upload-cancel');
 const textHashtags = imgUploadForm.querySelector('.text__hashtags');
 const textDescription = imgUploadForm.querySelector('.text__description');
-const imgUploadSubmit = imgUploadForm.querySelector('.img-upload__submit');
 
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
@@ -58,11 +57,11 @@ uploadFile.addEventListener('change', onFileChange);
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
-  //errorClass: 'form__item--invalid',
+  //errorClass: 'img-upload__field-wrapper__error-class',
   //successClass: 'form__item--valid',
   errorTextParent: 'img-upload__field-wrapper',
   //errorTextTag: 'span',
-  //errorTextClass: 'img-upload__field-wrapper__error-text'
+  errorTextClass: 'img-upload__field-wrapper__error-text'
 });
 
 //здесь добавляем все проверки правильности заполнения полей
@@ -83,7 +82,6 @@ const validateAmountHashtags = (value) => {
   return valueArray.length <= MAX_LENGTH_ARRAY_HASHTAG;
 };
 
-//доделать, чтобы выводилось сообщение об ошибке правильно
 const validateDoubleHashtags = (value) => {
   if (!value.length) {
     return true;
@@ -94,15 +92,13 @@ const validateDoubleHashtags = (value) => {
 
     for (let i = 0; i < valueArray.length; i++) {
       currentArray.push(valueArray[i]);
-      if (currentArray.includes(valueArray[i])) {
+      if (currentArray !== ' ' && currentArray.includes(valueArray[i + 1])) {
         return false;
-      } else {
-        return true;
       }
     }
+    return true;
   }
 };
-
 
 const validateSpaces = (value) => {
   const valueArray = value.split('');
@@ -122,13 +118,11 @@ const validateTextDescription = (value) => {
   }
 };
 
-//3. проверить, чтобы элементы в массиве не повторялись
-
-pristine.addValidator(textHashtags, validateAmountHashtags, 'больше 5 хэштегов, уберите лишний');
-pristine.addValidator(textHashtags, validateHashtag, 'хэштег должен начинаться со знака # и состоять из букв и цифр. Длина хэштега должа быть не более 20 символов.');
-pristine.addValidator(textHashtags, validateDoubleHashtags, 'этот хэштег уже добавлен');
-pristine.addValidator(textHashtags, validateSpaces, 'уберите лишний пробел');
-pristine.addValidator(textDescription, validateTextDescription, 'комментарий должен быть не более 140 символов');
+pristine.addValidator(textHashtags, validateAmountHashtags, 'Больше 5 хэштегов, уберите лишний.');
+pristine.addValidator(textHashtags, validateHashtag, 'Хэштег должен начинаться со знака # и состоять из букв и цифр. Длина хэштега должна быть не более 20 символов.');
+pristine.addValidator(textHashtags, validateDoubleHashtags, 'Этот хэштег уже добавлен.');
+pristine.addValidator(textHashtags, validateSpaces, 'Уберите лишний пробел.');
+pristine.addValidator(textDescription, validateTextDescription, 'Комментарий должен быть не более 140 символов.');
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
