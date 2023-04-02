@@ -19,7 +19,7 @@ const onCloseModalBtnClick = () => {
   closeModal();
 };
 
-function openModal () {
+function openModal() {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
@@ -31,7 +31,7 @@ function openModal () {
   closeModuleBtn.addEventListener('click', onCloseModalBtnClick);
 }
 
-function closeModal () {
+function closeModal() {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
@@ -40,4 +40,4 @@ function closeModal () {
   closeModuleBtn.removeEventListener('click', onCloseModalBtnClick);
 }
 
-export {openModal};
+export { openModal };

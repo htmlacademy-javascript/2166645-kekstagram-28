@@ -1,11 +1,11 @@
-import {photosData} from './data.js';
+import { photosData } from './data.js';
 
 const pictures = document.querySelector('.pictures');
 const templateFragment = document.querySelector('#picture').content.querySelector('.picture');
 
 const thumbnailsListFragment = document.createDocumentFragment();
 
-const fillPhotoTemplate = ({url, description, comments, likes, id}) => {
+const fillPhotoTemplate = ({ url, description, comments, likes, id }) => {
   const element = templateFragment.cloneNode(true);
   element.querySelector('.picture__img').src = url;
   element.querySelector('.picture__img').alt = description;
@@ -25,4 +25,4 @@ const renderPhotos = (thumbnails) => {
 
 renderPhotos(photosData);
 
-export {renderPhotos};
+export { renderPhotos };

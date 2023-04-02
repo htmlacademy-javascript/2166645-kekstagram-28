@@ -1,4 +1,4 @@
-import {createRandomIdFromRangeGenerator, getRandomInteger} from './util.js';
+import { createRandomIdFromRangeGenerator, getRandomInteger } from './util.js';
 
 const NAMES = [
   'Иван',
@@ -86,7 +86,7 @@ const createPhotoData = () => {
   };
 };
 
-const photosData = Array.from({length: IMAGES_COUNT}, createPhotoData);
+const photosData = Array.from({ length: IMAGES_COUNT }, createPhotoData);
 console.log(photosData);
 
-export {photosData};
+export { photosData };
