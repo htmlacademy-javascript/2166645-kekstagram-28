@@ -1,3 +1,5 @@
+import { resetScale } from './scaleimage.js';
+
 const MAX_LENGTH_ARRAY_HASHTAG = 5;
 const MAX_LENGTH_DESCRIPTION = 140;
 
@@ -7,6 +9,7 @@ const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
 const closeOverlayBtn = imgUploadForm.querySelector('#upload-cancel');
 const textHashtags = imgUploadForm.querySelector('.text__hashtags');
 const textDescription = imgUploadForm.querySelector('.text__description');
+
 
 const onDocumentKeydown = (evt) => {
   if (evt.key === 'Escape') {
@@ -47,6 +50,7 @@ const onFileChange = () => {
 function closeOverlay() {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  resetScale();
 
   document.removeEventListener('keydown', onDocumentKeydown);
   closeOverlayBtn.removeEventListener('keydown', onCloseModalBtnKeydown);
@@ -57,10 +61,7 @@ uploadFile.addEventListener('change', onFileChange);
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
-  //errorClass: 'img-upload__field-wrapper__error-class',
-  //successClass: 'form__item--valid',
   errorTextParent: 'img-upload__field-wrapper',
-  //errorTextTag: 'span',
   errorTextClass: 'img-upload__field-wrapper__error-text'
 });
 
