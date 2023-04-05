@@ -1,4 +1,5 @@
 import { resetScale } from './scaleimage.js';
+import { resetEffects } from './effectimage.js';
 
 const MAX_LENGTH_ARRAY_HASHTAG = 5;
 const MAX_LENGTH_DESCRIPTION = 140;
@@ -51,6 +52,7 @@ function closeOverlay() {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   resetScale();
+  resetEffects();
 
   document.removeEventListener('keydown', onDocumentKeydown);
   closeOverlayBtn.removeEventListener('keydown', onCloseModalBtnKeydown);
