@@ -79,7 +79,7 @@ const updateSlider = () => {
     start: chosenEffect.maxScale,
   });
 
-  if (isDefault) {
+  if (isDefault()) {
     hideSlider();
   } else {
     showSlider();
