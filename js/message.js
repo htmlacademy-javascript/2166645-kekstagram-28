@@ -1,8 +1,5 @@
 const TIME_FOR_ALERT_MESSAGE = 3000;
 
-const failureMessage =
-const successMessage =
-
 const showFailureMessage = (message) => {
   const alert = document.createElement('div');
   alert.style.position = 'absolute';
@@ -19,6 +16,7 @@ const showFailureMessage = (message) => {
   document.body.append(alert);
 
   setTimeout(() => {
-    alert.remove()}, TIME_FOR_ALERT_MESSAGE
+    alert.remove();
+  }, TIME_FOR_ALERT_MESSAGE
   );
 };
