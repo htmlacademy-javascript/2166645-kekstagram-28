@@ -4,12 +4,18 @@ import { resetEffects } from './effectimage.js';
 const MAX_LENGTH_ARRAY_HASHTAG = 5;
 const MAX_LENGTH_DESCRIPTION = 140;
 
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Отправляю...'
+};
+
 const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadFile = imgUploadForm.querySelector('#upload-file');
 const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
 const closeOverlayBtn = imgUploadForm.querySelector('#upload-cancel');
 const textHashtags = imgUploadForm.querySelector('.text__hashtags');
 const textDescription = imgUploadForm.querySelector('.text__description');
+const imgUploadSubmitButton = imgUploadForm.querySelector('.img-upload__submit');
 
 
 const onDocumentKeydown = (evt) => {
@@ -127,11 +133,37 @@ pristine.addValidator(textHashtags, validateDoubleHashtags, 'Этот хэште
 pristine.addValidator(textHashtags, validateSpaces, 'Уберите лишний пробел.');
 pristine.addValidator(textDescription, validateTextDescription, 'Комментарий должен быть не более 140 символов.');
 
-const onFormSubmit = (evt) => {
+const blockSubmitButton = () => {
+  imgUploadSubmitButton.disabled = true;
+  imgUploadSubmitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  imgUploadSubmitButton.disabled = false;
+  imgUploadSubmitButton.textContent = SubmitButtonText.IDLE;
+};
+
+/*const onFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
+    const formData = new FormData(evt.target);
     imgUploadForm.submit();
   }
 };
 
-imgUploadForm.addEventListener('submit', onFormSubmit);
+imgUploadForm.addEventListener('submit', onFormSubmit);*/
+
+const setUserFormSubmit = (cb) => {
+  imgUploadForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      await cb(new FormData(imgUploadForm));
+      unblockSubmitButton();
+    }
+  });
+};
+
+export { setUserFormSubmit };
