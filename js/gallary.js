@@ -3,6 +3,8 @@ import { openModal } from './fullpictures.js';
 
 const picturesContainer = document.querySelector('.pictures');
 
+const data = await getData();
+
 function makeTemplateSocialCommentLi({ avatar, name, message }) {
   return (`<li class="social__comment">
     <img class="social__picture" src="${avatar}" alt="${name}" width="35" height="35">
@@ -29,10 +31,8 @@ picturesContainer.addEventListener('click', (evt) => {
   if (!photoAttrId) {
     return;
   }
-  const photoDataObj = getData.find((element) => element.id === Number(photoAttrId));
+  const photoDataObj = data.find((element) => element.id === Number(photoAttrId));
 
   fillBigPicture(photoDataObj);
   openModal();
 });
-
-

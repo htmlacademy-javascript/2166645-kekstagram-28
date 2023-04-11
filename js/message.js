@@ -1,4 +1,4 @@
-const TIME_FOR_ALERT_MESSAGE = 3000;
+const TIME_FOR_ALERT_MESSAGE = 5000;
 
 const showFailureMessage = (message) => {
   const alert = document.createElement('div');
@@ -20,3 +20,5 @@ const showFailureMessage = (message) => {
   }, TIME_FOR_ALERT_MESSAGE
   );
 };
+
+export { showFailureMessage };
