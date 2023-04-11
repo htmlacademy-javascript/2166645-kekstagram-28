@@ -1,4 +1,4 @@
-import { photosData } from './data.js';
+/*import {getData} from './api.js';*/
 
 const pictures = document.querySelector('.pictures');
 const templateFragment = document.querySelector('#picture').content.querySelector('.picture');
@@ -22,7 +22,5 @@ const renderPhotos = (thumbnails) => {
   });
   pictures.appendChild(thumbnailsListFragment);
 };
-
-renderPhotos(photosData);
 
 export { renderPhotos };
