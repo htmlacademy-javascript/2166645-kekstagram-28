@@ -3,6 +3,7 @@ import { sendData, getData } from './api.js';
 import './form.js';
 import { renderPhotos } from './thumbnails.js';
 import { showFailureMessage } from './message.js';
+import './user-picture.js';
 
 try {
   const data = await getData();
