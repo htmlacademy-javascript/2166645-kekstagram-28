@@ -1,5 +1,7 @@
-import { resetScale } from './scaleimage.js';
-import { resetEffects } from './effectimage.js';
+import { resetScale } from './scale-image.js';
+import { resetEffects } from './effect-image.js';
+import { showSuccesMessage, showErrorMessage } from './booklet.js';
+import { sendData } from './api.js';
 
 const MAX_LENGTH_ARRAY_HASHTAG = 5;
 const MAX_LENGTH_DESCRIPTION = 140;
@@ -153,7 +155,7 @@ const unblockSubmitButton = () => {
 
 imgUploadForm.addEventListener('submit', onFormSubmit);*/
 
-const setUserFormSubmit = (cb) => {
+/*const setUserFormSubmit = (cb) => {
   imgUploadForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
 
@@ -166,4 +168,22 @@ const setUserFormSubmit = (cb) => {
   });
 };
 
-export { setUserFormSubmit };
+export { setUserFormSubmit };*/
+
+const onFormSubmit = async (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+
+  if (isValid) {
+    try {
+      await sendData(new FormData(imgUploadForm));
+      closeOverlay();
+      showSuccesMessage();
+    } catch {
+      showErrorMessage();
+    }
+  }
+};
+
+imgUploadForm.addEventListener('submit', onFormSubmit);
