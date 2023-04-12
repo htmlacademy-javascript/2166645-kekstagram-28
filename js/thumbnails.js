@@ -1,5 +1,3 @@
-/*import {getData} from './api.js';*/
-
 const pictures = document.querySelector('.pictures');
 const templateFragment = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -17,6 +15,7 @@ const fillPhotoTemplate = ({ url, description, comments, likes, id }) => {
 };
 
 const renderPhotos = (thumbnails) => {
+  pictures.querySelectorAll('.picture').forEach((element) => element.remove());
   thumbnails.forEach((thumbnail) => {
     thumbnailsListFragment.appendChild(fillPhotoTemplate(thumbnail));
   });
