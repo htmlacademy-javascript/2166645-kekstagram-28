@@ -2,6 +2,7 @@ import { resetScale } from './scale-image.js';
 import { resetEffects } from './effect-image.js';
 import { showSuccesMessage, showErrorMessage } from './booklet.js';
 import { sendData } from './api.js';
+import { isEnterKey, isEscapeKey } from './util.js';
 
 const MAX_LENGTH_ARRAY_HASHTAG = 5;
 const MAX_LENGTH_DESCRIPTION = 140;
@@ -20,7 +21,7 @@ const textDescription = imgUploadForm.querySelector('.text__description');
 const imgUploadSubmitButton = imgUploadForm.querySelector('.img-upload__submit');
 
 const onDocumentKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     if (
       textHashtags === document.activeElement ||
       textDescription === document.activeElement
@@ -33,8 +34,8 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const onCloseModalBtnKeydown = (evt) => {
-  if (evt.key === 'Enter') {
+const onCloseModalBtnKeydown = () => {
+  if (isEnterKey) {
     closeOverlay();
     imgUploadForm.reset();
   }
@@ -136,17 +137,21 @@ pristine.addValidator(
   validateAmountHashtags,
   'Больше 5 хэштегов, уберите лишний.'
 );
+
 pristine.addValidator(
   textHashtags,
   validateHashtag,
   'Хэштег должен начинаться со знака # и состоять из букв и цифр. Длина хэштега должна быть не более 20 символов.'
 );
+
 pristine.addValidator(
   textHashtags,
   validateDoubleHashtags,
   'Этот хэштег уже добавлен.'
 );
+
 pristine.addValidator(textHashtags, validateSpaces, 'Уберите лишний пробел.');
+
 pristine.addValidator(
   textDescription,
   validateTextDescription,
