@@ -1,28 +1,26 @@
-import { resetScale } from "./scale-image.js";
-import { resetEffects } from "./effect-image.js";
-import { showSuccesMessage, showErrorMessage } from "./booklet.js";
-import { sendData } from "./api.js";
+import { resetScale } from './scale-image.js';
+import { resetEffects } from './effect-image.js';
+import { showSuccesMessage, showErrorMessage } from './booklet.js';
+import { sendData } from './api.js';
 
 const MAX_LENGTH_ARRAY_HASHTAG = 5;
 const MAX_LENGTH_DESCRIPTION = 140;
 
 const SubmitButtonText = {
-  IDLE: "Опубликовать",
-  SENDING: "Отправляю...",
+  IDLE: 'Опубликовать',
+  SENDING: 'Отправляю...',
 };
 
-const imgUploadForm = document.querySelector(".img-upload__form");
-const uploadFile = imgUploadForm.querySelector("#upload-file");
-const imgUploadOverlay = imgUploadForm.querySelector(".img-upload__overlay");
-const closeOverlayBtn = imgUploadForm.querySelector("#upload-cancel");
-const textHashtags = imgUploadForm.querySelector(".text__hashtags");
-const textDescription = imgUploadForm.querySelector(".text__description");
-const imgUploadSubmitButton = imgUploadForm.querySelector(
-  ".img-upload__submit"
-);
+const imgUploadForm = document.querySelector('.img-upload__form');
+const uploadFile = imgUploadForm.querySelector('#upload-file');
+const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
+const closeOverlayBtn = imgUploadForm.querySelector('#upload-cancel');
+const textHashtags = imgUploadForm.querySelector('.text__hashtags');
+const textDescription = imgUploadForm.querySelector('.text__description');
+const imgUploadSubmitButton = imgUploadForm.querySelector('.img-upload__submit');
 
 const onDocumentKeydown = (evt) => {
-  if (evt.key === "Escape") {
+  if (evt.key === 'Escape') {
     if (
       textHashtags === document.activeElement ||
       textDescription === document.activeElement
@@ -36,7 +34,7 @@ const onDocumentKeydown = (evt) => {
 };
 
 const onCloseModalBtnKeydown = (evt) => {
-  if (evt.key === "Enter") {
+  if (evt.key === 'Enter') {
     closeOverlay();
     imgUploadForm.reset();
   }
@@ -48,12 +46,12 @@ const onCloseModalBtnClick = () => {
 };
 
 const openImgUploadOverlay = () => {
-  imgUploadOverlay.classList.remove("hidden");
-  document.body.classList.add("modal-open");
+  imgUploadOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
 
-  document.addEventListener("keydown", onDocumentKeydown);
-  closeOverlayBtn.addEventListener("keydown", onCloseModalBtnKeydown);
-  closeOverlayBtn.addEventListener("click", onCloseModalBtnClick);
+  document.addEventListener('keydown', onDocumentKeydown);
+  closeOverlayBtn.addEventListener('keydown', onCloseModalBtnKeydown);
+  closeOverlayBtn.addEventListener('click', onCloseModalBtnClick);
 };
 
 const onFileChange = () => {
@@ -61,22 +59,22 @@ const onFileChange = () => {
 };
 
 function closeOverlay() {
-  imgUploadOverlay.classList.add("hidden");
-  document.body.classList.remove("modal-open");
+  imgUploadOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
   resetScale();
   resetEffects();
-
-  document.removeEventListener("keydown", onDocumentKeydown);
-  closeOverlayBtn.removeEventListener("keydown", onCloseModalBtnKeydown);
-  closeOverlayBtn.removeEventListener("click", onCloseModalBtnClick);
+  imgUploadForm.reset();
+  document.removeEventListener('keydown', onDocumentKeydown);
+  closeOverlayBtn.removeEventListener('keydown', onCloseModalBtnKeydown);
+  closeOverlayBtn.removeEventListener('click', onCloseModalBtnClick);
 }
 
-uploadFile.addEventListener("change", onFileChange);
+uploadFile.addEventListener('change', onFileChange);
 
 const pristine = new Pristine(imgUploadForm, {
-  classTo: "img-upload__field-wrapper",
-  errorTextParent: "img-upload__field-wrapper",
-  errorTextClass: "img-upload__field-wrapper__error-text",
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper__error-text',
 });
 
 //здесь добавляем все проверки правильности заполнения полей
@@ -86,14 +84,14 @@ const validateHashtag = (value) => {
   if (!value.length) {
     return true;
   } else {
-    const valueArray = value.trim().split(" ");
+    const valueArray = value.trim().split(' ');
 
     return valueArray.every((element) => isHashtag.test(element));
   }
 };
 
 const validateAmountHashtags = (value) => {
-  const valueArray = value.trim().split(" ");
+  const valueArray = value.trim().split(' ');
   return valueArray.length <= MAX_LENGTH_ARRAY_HASHTAG;
 };
 
@@ -102,12 +100,12 @@ const validateDoubleHashtags = (value) => {
     return true;
   } else {
     const string = value.toLowerCase();
-    const valueArray = string.trim().split(" ");
+    const valueArray = string.trim().split(' ');
     const currentArray = [];
 
     for (let i = 0; i < valueArray.length; i++) {
       currentArray.push(valueArray[i]);
-      if (currentArray !== " " && currentArray.includes(valueArray[i + 1])) {
+      if (currentArray !== ' ' && currentArray.includes(valueArray[i + 1])) {
         return false;
       }
     }
@@ -116,9 +114,9 @@ const validateDoubleHashtags = (value) => {
 };
 
 const validateSpaces = (value) => {
-  const valueArray = value.split("");
+  const valueArray = value.split('');
   for (let i = 0; i < valueArray.length; i++) {
-    if (valueArray[i] === " " && valueArray[i + 1] === " ") {
+    if (valueArray[i] === ' ' && valueArray[i + 1] === ' ') {
       return false;
     }
   }
@@ -136,23 +134,23 @@ const validateTextDescription = (value) => {
 pristine.addValidator(
   textHashtags,
   validateAmountHashtags,
-  "Больше 5 хэштегов, уберите лишний."
+  'Больше 5 хэштегов, уберите лишний.'
 );
 pristine.addValidator(
   textHashtags,
   validateHashtag,
-  "Хэштег должен начинаться со знака # и состоять из букв и цифр. Длина хэштега должна быть не более 20 символов."
+  'Хэштег должен начинаться со знака # и состоять из букв и цифр. Длина хэштега должна быть не более 20 символов.'
 );
 pristine.addValidator(
   textHashtags,
   validateDoubleHashtags,
-  "Этот хэштег уже добавлен."
+  'Этот хэштег уже добавлен.'
 );
-pristine.addValidator(textHashtags, validateSpaces, "Уберите лишний пробел.");
+pristine.addValidator(textHashtags, validateSpaces, 'Уберите лишний пробел.');
 pristine.addValidator(
   textDescription,
   validateTextDescription,
-  "Комментарий должен быть не более 140 символов."
+  'Комментарий должен быть не более 140 символов.'
 );
 
 const blockSubmitButton = () => {
@@ -180,8 +178,9 @@ const onFormSubmit = async (evt) => {
     } catch {
       showErrorMessage();
       unblockSubmitButton();
+      document.removeEventListener('keydown', onDocumentKeydown);
     }
   }
 };
 
-imgUploadForm.addEventListener("submit", onFormSubmit);
+imgUploadForm.addEventListener('submit', onFormSubmit);

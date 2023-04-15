@@ -1,4 +1,3 @@
-import { getData } from './api.js';
 import { openModal } from './full-pictures.js';
 
 const COMMENTS_PER_PORTION = 5;
@@ -7,8 +6,6 @@ const pictureBlock = document.querySelector('.big-picture');
 const picturesContainer = document.querySelector('.pictures');
 const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
-
-const data = await getData();
 
 function makeTemplateSocialCommentLi({ avatar, name, message }) {
   return (`<li class="social__comment">
@@ -56,15 +53,19 @@ const fillBigPicture = ({ url, description, likes, comments }) => {
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
-picturesContainer.addEventListener('click', (evt) => {
-  const photoAttrId = evt.target.parentNode.dataset.thumbnailId;
-  if (!photoAttrId) {
-    return;
-  }
-  const photoDataObj = data.find(
-    (element) => element.id === Number(photoAttrId)
-  );
+const initGallery = (data) => {
+  picturesContainer.addEventListener('click', (evt) => {
+    const photoAttrId = evt.target.parentNode.dataset.thumbnailId;
+    if (!photoAttrId) {
+      return;
+    }
+    const photoDataObj = data.find(
+      (element) => element.id === Number(photoAttrId)
+    );
 
-  fillBigPicture(photoDataObj);
-  openModal();
-});
+    fillBigPicture(photoDataObj);
+    openModal();
+  });
+};
+
+export {initGallery};
